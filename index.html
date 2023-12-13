@@ -1,0 +1,38 @@
+<!-- Frontend HTML -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Fullstack Greeting</title>
+</head>
+<body>
+    <h1>Simple Fullstack Greeting</h1>
+    
+    <form id="greetForm">
+        <label for="name">Enter your name: </label>
+        <input type="text" id="name" required>
+        <button type="submit">Greet</button>
+    </form>
+
+    <div id="greetingResult"></div>
+
+    <script>
+        document.getElementById('greetForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            
+            const response = await fetch('/greet', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name }),
+            });
+
+            const result = await response.json();
+            document.getElementById('greetingResult').innerText = result.message;
+        });
+    </script>
+</body>
+</html>
